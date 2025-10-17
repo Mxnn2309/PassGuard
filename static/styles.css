@@ -1,0 +1,414 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --primary-color: #2563eb;
+  --primary-dark: #01258aff;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --very-weak-color: #dc2626;
+  --weak-color: #f86d42;
+  --good-color: #ffb74f;
+  --strong-color: #00ce56;
+  --very-strong-color: #008537;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-color: #1e293b;
+  --text-light: #64748b;
+  --border-color: #e2e8f0;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --radius: 25px;
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 750px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow:  50px 50px 100px #bdbdbd, -50px -50px 100px #ffffff;
+  overflow: hidden;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.header h4 {
+  font-size: 2rem;
+  font-weight: 400;
+  opacity: 0.9;
+  margin-bottom: 0.25rem;
+}
+
+.header h6 {
+  font-size: 1rem;
+  font-weight: 300;
+  opacity: 0.8;
+}
+
+.content {
+  padding: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px 45px 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: var(--transition);
+  background: var(--bg-color);
+  font-family: monospace;
+}
+
+input[type="password"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--text-light);
+  transition: var(--transition);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password:hover {
+  background: var(--border-color);
+  color: var(--text-color);
+}
+
+.toggle-password:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+}
+
+.checkbox-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem ;
+  vertical-align: middle;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-color);
+  position: relative;
+  top: 0;
+}
+
+.checkbox-group label {
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+  margin: 0;
+}
+
+button[type="submit"] {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+.result-box {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--bg-color);
+  border: 5px solid var(--primary-color);
+  border-radius: var(--radius);
+  box-shadow: inset 50px 50px 100px #f0f0f0, inset -50px -50px 100px #ffffff;
+}
+
+.score-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.score {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: white;
+}
+
+.score.veryweak {
+  background: var(--very-weak-color);
+}
+
+.score.weak {
+  background: var(--weak-color);
+}
+
+.score.good {
+  background: var(--good-color);
+}
+
+.score.strong {
+  background: var(--strong-color);
+}
+
+.score.verystrong {
+  background: var(--very-strong-color);
+}
+
+.verdict {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background: var(--border-color);
+  margin: 1.5rem 0;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.details-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detail-label {
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+.detail-value {
+  font-weight: 600;
+  text-align: right;
+}
+
+.recommendations {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow:  5px 5px 25px #ffe5b7ff, -5px -5px 25px #ffe5b7ff;
+}
+
+.recommendations ul {
+  list-style: none;
+  padding: 0;
+}
+
+.recommendations li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.recommendations li:before {
+  content: "⚠️";
+  position: absolute;
+  left: 0;
+}
+
+.recommendations li:last-child {
+  border-bottom: none;
+}
+
+.classes-display {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.class-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 2px solid;
+  position: relative;
+}
+
+.class-tag.present {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.class-tag.missing {
+  background: var(--bg-color);
+  color: var(--text-light);
+  border-color: var(--border-color);
+}
+
+/* Single icon version */
+.class-tag.present::before {
+  content: "✓";
+  margin-right: 0.25rem;
+  font-weight: bold;
+}
+
+.class-tag.missing::before {
+  content: "✗";
+  margin-right: 0.25rem;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    border-radius: 8px;
+  }
+
+  .header {
+    padding: 1.5rem;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .score-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .detail-value {
+    text-align: left;
+  }
+}
+
+/* Animation for result appearance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-box {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Loading state */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: "Checking...";
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.breach-warning {
+  color: var(--danger-color);
+  font-weight: 700;
+}

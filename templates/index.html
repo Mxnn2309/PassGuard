@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Strength & Breach Checker</title>
+  <!-- External stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <!-- Emoji favicon 🔐 -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔐 PassGuard</h1>
+      <h4>Guard What Matters - Your Passwords.</h4>
+      <h6>Password Strength & Breach Checker</h6>
+    </div>
+
+    <div class="content">
+      <form method="post" action="/check" id="passwordForm">
+        <div class="form-group">
+          <label for="pw">Enter password:</label>
+          <div class="password-input-container">
+            <input type="password" name="password" id="pw" placeholder="Type your password here ..." required>
+            <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" name="use_hibp" id="use_hibp" checked>
+          <label for="use_hibp">Check HaveIBeenPwned</label>
+        </div>
+
+        <button type="submit" id="submitBtn">Check Password Strength</button>
+      </form>
+
+      {% if result %}
+      <div class="result-box">
+        <div class="score-header">
+          <div class="score
+              {% if result.score > 80 %}verystrong
+              {% elif result.score >= 60 %}strong
+              {% elif result.score >= 40 %}good
+              {% elif result.score >= 20 %}weak
+              {% else %}veryweak
+              {% endif %}"
+          >
+            {{ result.score }} / 100
+          </div>
+          <div class="verdict">Verdict: {{ result.verdict }}</div>
+        </div>
+
+        <hr>
+
+        <div class="section-title">Password Analysis</div>
+        <div class="details-grid">
+          <div class="detail-item">
+            <span class="detail-label">Length:</span>
+            <span class="detail-value">{{ result.length }} characters</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Shannon Entropy:</span>
+            <span class="detail-value">{{ result.entropy_bits }} bits</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Character Classes:</span>
+            <span class="detail-value">
+              <div class="classes-display">
+                <span class="class-tag {% if result.classes.lower %}present{% else %}missing{% endif %}">
+                  Lowercase
+                </span>
+                <span class="class-tag {% if result.classes.upper %}present{% else %}missing{% endif %}">
+                  Uppercase
+                </span>
+                <span class="class-tag {% if result.classes.digit %}present{% else %}missing{% endif %}">
+                  Digits
+                </span>
+                <span class="class-tag {% if result.classes.symbol %}present{% else %}missing{% endif %}">
+                  Symbols
+                </span>
+              </div>
+            </span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Dictionary Words:</span>
+            <span class="detail-value">
+              {% if result.dict_matches %}
+                {{ result.dict_matches | join(', ') }}
+              {% else %}
+                None found
+              {% endif %}
+            </span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Pattern Detected:</span>
+            <span class="detail-value">
+              {% if result.pattern_found %}
+                Yes ({{ result.pattern }})
+              {% else %}
+                No
+              {% endif %}
+            </span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Breach Occurrences:</span>
+            <span class="detail-value {% if result.hibp_count > 0 %}breach-warning{% endif %}">
+              {{ result.hibp_count }} time{% if result.hibp_count != 1 %}s{% endif %}
+            </span>
+          </div>
+        </div>
+
+        <div class="section-title">Security Recommendations</div>
+        <div class="recommendations">
+          <ul>
+            {% for r in result.recommendations %}
+              <li>{{ r }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    // Password visibility toggle
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('pw');
+    const passwordHint = document.getElementById('passwordHint');
+
+    togglePassword.addEventListener('click', function() {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+
+      // Update icon
+      const icon = this.querySelector('svg');
+      if (isPassword) {
+        icon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        `;
+      } else {
+        icon.innerHTML = `
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        `;
+      }
+
+      // Update aria-label for accessibility
+      this.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+    });
+
+    // Add loading state to form submission
+    document.getElementById('passwordForm').addEventListener('submit', function() {
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Checking Password Security...';
+    });
+  </script>
+</body>
+</html>
