@@ -6,8 +6,6 @@
 ![Python](https://img.shields.io/badge/Python-3.7%2B-green)
 ![Flask](https://img.shields.io/badge/Flask-2.0%2B-lightgrey)
 
-![PassGuard Interface](image.png)
-
 ## 📖 Abstract
 
 PassGuard is an advanced web application designed to address critical cybersecurity challenges in password security. It provides real-time password strength evaluation, detailed security metrics, and actionable improvement recommendations through an intuitive interface. By combining multi-layered analysis with breach database verification, PassGuard revolutionizes traditional password strength assessment and promotes better security practices.
@@ -65,3 +63,7 @@ PassGuard is an advanced web application designed to address critical cybersecur
     ```
     python app.py
     ```
+
+## 💻 User Interface
+
+![PassGuard Interface](image.png)
