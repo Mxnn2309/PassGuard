@@ -3,9 +3,10 @@
 
 *A Comprehensive Web Application for Password Strength Analysis and Breach Detection*
 
-
 ![Python](https://img.shields.io/badge/Python-3.7%2B-green)
 ![Flask](https://img.shields.io/badge/Flask-2.0%2B-lightgrey)
+
+![PassGuard Interface](image.png)
 
 ## 📖 Abstract
 
